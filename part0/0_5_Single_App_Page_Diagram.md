@@ -1,7 +1,4 @@
 ```mermaid
 graph TD;
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;
+    Visit Page-->Save New Note: Get https://studies.cs.helsinki.fi/exampleapp/spa.js;
 ```

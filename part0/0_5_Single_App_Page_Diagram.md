@@ -1,4 +1,4 @@
 ```mermaid
    sequenceDiagram
-      Visit_Page -->Save_New_Note: Test
+      Server -->App: Get https://studies.cs.helsinki.fi/exampleapp/spa.js 
 ```

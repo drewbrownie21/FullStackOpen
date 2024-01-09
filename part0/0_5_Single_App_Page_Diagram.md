@@ -1,4 +1,4 @@
 ```mermaid
    graph LR
-      Visit_Page -->Save_New_Note;
+      Visit_Page -->Save_New_Note: Test;
 ```

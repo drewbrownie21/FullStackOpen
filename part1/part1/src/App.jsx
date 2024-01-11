@@ -6,14 +6,22 @@ const Hello = (props) => {
   )
 }
 
+
+
+const Footer = () => {
+  return(
+    <div>
+      Greeting App by <a href='wwww.google.com'>DREW </a>
+    </div>
+  )
+}
+
 const App = () => {
-  const name = 'Peter';
-  const age = 10;
+  const friends = ['Peter', 'Jack']
 
   return (
     <div>
-      <h1>Greetings</h1>
-      <Hello name={name} age={age}/>
+      <p>{friends}</p>
     </div>
   )
 }

@@ -1,29 +1,28 @@
-const Hello = (props) => {
+import React from 'react';
+
+const Hello = ({name, age}) => {
+  const bornYear = () => new Date().getFullYear()
+
   return (
     <div>
-      <p>Hello {props.name}, you are {props.age} years old.</p>
-    </div>
-  )
-}
-
-
-
-const Footer = () => {
-  return(
-    <div>
-      Greeting App by <a href='wwww.google.com'>DREW </a>
+      <p>
+        Hello {name}, you are {age} years old
+      </p>
+      <p>So you are probably {bornYear()}</p>
     </div>
   )
 }
 
 const App = () => {
-  const friends = ['Peter', 'Jack']
+  const name = 'Peter'
+  const age = 10
 
   return (
     <div>
-      <p>{friends}</p>
+      <h1>Greetings</h1>
+      <Hello name={name} age={age} />
     </div>
   )
 }
 
-export default App
+export default App;

@@ -1,63 +1,58 @@
-const Header = (props) => {
-  return (
-    <div>
-      <p>{props.course.name}</p>
-    </div>
-  )
+import { useState } from 'react'
+
+const Display = props => <div><b>{props.title}</b></div>
+
+const Button = (props) => (
+  <button onClick={props.handleClick}>
+    {props.text}
+  </button>
+)
+
+const DisplayTotals = (props) => {
+  return(
+  <p>
+    {props.title} {props.totalValue}
+  </p>)
 }
 
-const Part = (props) => {
-  return (
-    <div>
-      <p>
-        {props.part} {props.exercises}
-      </p>
-    </div>
-  )
-}
-
-const Content = (props) => {
-  return (
-    <div>
-      <Part part={props.course.parts[0].name} exercises={props.course.parts[0].exercises}/>
-      <Part part={props.course.parts[1].name} exercises={props.course.parts[1].exercises}/>
-      <Part part={props.course.parts[2].name} exercises={props.course.parts[2].exercises}/>
-    </div>
-  )
-}
-
-const Total = (props) => {
-  return (
-    <div>
-      <p>Number of exercises {props.course.parts[0].exercises + props.course.parts[1].exercises + props.course.parts[2].exercises}</p>
-    </div>
-  )
-}
 
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
+  // save clicks of each button to its own state
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
+
+  const setGoodValue = (newValue) => {
+    console.log("New value is", newValue)
+    setGood(newValue + 1)
   }
+
+  const setNeutralValue = (newValue) => {
+    console.log("New value is", newValue)
+    setNeutral(newValue + 1)
+  }
+
+  const setBadValue = (newValue) => {
+    console.log("New value is", newValue)
+    setBad(newValue + 1)
+  }
+
+  const title = "give feedback"
+  const stats = "statistics"
 
   return (
     <div>
-      <Header  course={course}/>
-      <Content course={course}/>
-      <Total   course={course}/>
+      <Display title={title}/>
+      <p></p>
+      <Button handleClick={() => setGoodValue(good)} text = {"good"}/>
+      <Button handleClick={() => setNeutralValue(neutral)} text = {"neutral"}/>
+      <Button handleClick={() => setBadValue(bad)} text = {"bad"}/>
+      <p></p>
+      <Display title={stats}/>
+      <p></p>
+      <DisplayTotals title={"good"} totalValue={good}/>
+      <DisplayTotals title={"neutral"} totalValue={neutral}/>
+      <DisplayTotals title={"bad"} totalValue={bad}/>
     </div>
   )
 }

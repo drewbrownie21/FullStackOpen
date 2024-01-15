@@ -1,22 +1,29 @@
 import { useState } from 'react'
 
+const Display = props => <div>{props.value}</div>
+
+const Button = (props) => (
+  <button onClick={props.handleClick}>
+    {props.text}
+  </button>
+)
+
 const App = () => {
   const [value, setValue] = useState(10)
 
-  const setNewValue = (newValue) => () => {
+  const setNewValue = (newValue) => {
+    console.log("New value is", newValue)
     setValue(newValue)
   }
 
   return(
     <div>
-      {value}
-      <button onClick={setNewValue(1000)}>1000</button>
-      <button onClick={setNewValue(10)}>10</button>
-      <button onClick={setNewValue(value+1)}>Increment</button>
-
+      <Display value={value} />
+      <Button handleClick={() => setNewValue(1000)} text = {"Thousand"}/>
+      <Button handleClick={() => setNewValue(value+1)} text = {"Increment"}/>
+      <Button handleClick={() => setNewValue(0)} text = {"Reset"}/>
     </div>
   )
-
 }
 
 export default App

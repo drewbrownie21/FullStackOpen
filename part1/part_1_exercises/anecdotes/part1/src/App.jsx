@@ -1,13 +1,5 @@
 import { useState } from 'react'
 
-const DisplayRand = ({randAnecdote}) => {
-  return(
-    <p>
-        {randAnecdote}
-    </p>
-  )
-}
-
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -21,10 +13,19 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
-  console.log(anecdotes[selected])
+  const [votes, setVotes] = useState(anecdotes.map(_ => 0))
+
+  const VoteSelect = () => {
+    const newVotes = [...votes]
+    newVotes[selected] += 1 
+    setVotes(newVotes)
+  }
+
   return (
     <div>
-      <DisplayRand randAnecdote={anecdotes[selected]}/>
+      <p>{anecdotes[selected]}</p>
+      <p>has {votes[selected]} votes.</p>
+      <button onClick={() => VoteSelect()}>Vote!</button>
       <p>
       <button onClick={() => setSelected(Math.floor(Math.random() * anecdotes.length))}>next anecdote</button>
       </p>

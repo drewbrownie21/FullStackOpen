@@ -8,26 +8,14 @@ const Button = (props) => (
   </button>
 )
 
-const DisplayTotals = (props) => {
+const Statistics = (props) => {
   return(
-  <p>
-    {props.title} {props.totalValue}
-  </p>)
-}
-
-const Average = (props) => {
-  return(
-  <p>
-    average {(props.goodTotal - props.badTotal)/(props.allTotal)}
-  </p>
-  )
-}
-
-const Positive = (props) => {
-  return(
-    <p>
-      positive {(props.goodTotal/(props.allTotal)) *100}%
-    </p>
+  <p>good {props.goodTotal}<br />
+     neutral {props.neutralTotal}<br />
+     bad {props.badTotal}<br />
+     all {props.allTotal}<br />
+     average {(props.goodTotal - props.badTotal)/(props.goodTotal + props.neutralTotal + props.badTotal)}<br />
+     positive {(props.goodTotal/(props.goodTotal + props.neutralTotal + props.badTotal)) *100}%</p>
   )
 }
 
@@ -36,23 +24,6 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
-  const [all, setAll] = useState(0)
-
-  const setGoodValue = (newValue) => {
-    setGood(newValue + 1)
-    setAll(all+1)
-  }
-
-  const setNeutralValue = (newValue) => {
-    setNeutral(newValue + 1)
-    setAll(all+1)
-  }
-
-  const setBadValue = (newValue) => {
-    setBad(newValue + 1)
-    setAll(all+1)
-  }
-
   const title = "give feedback"
   const stats = "statistics"
 
@@ -60,18 +31,13 @@ const App = () => {
     <div>
       <Display title={title}/>
       <p></p>
-      <Button handleClick={() => setGoodValue(good)} text = {"good"}/>
-      <Button handleClick={() => setNeutralValue(neutral)} text = {"neutral"}/>
-      <Button handleClick={() => setBadValue(bad)} text = {"bad"}/>
+      <Button handleClick={() => setGood(good+1)} text = {"good"}/>
+      <Button handleClick={() => setNeutral(neutral+1)} text = {"neutral"}/>
+      <Button handleClick={() => setBad(bad+1)} text = {"bad"}/>
       <p></p>
       <Display title={stats}/>
       <p></p>
-      <DisplayTotals title={"good"} totalValue={good}/>
-      <DisplayTotals title={"neutral"} totalValue={neutral}/>
-      <DisplayTotals title={"bad"} totalValue={bad}/>
-      <DisplayTotals title={"all"} totalValue={all}/>
-      <Average goodTotal={good} allTotal={all} badTotal={bad} />
-      <Positive goodTotal={good} allTotal={all}/>
+      <Statistics goodTotal={good} neutralTotal={neutral} badTotal={bad}/>
     </div>
   )
 }

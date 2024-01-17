@@ -14,21 +14,28 @@ const App = () => {
    
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(anecdotes.map(_ => 0))
+  const [popular, setPopular] = useState(0)
 
   const VoteSelect = () => {
     const newVotes = [...votes]
     newVotes[selected] += 1 
     setVotes(newVotes)
-  }
 
+    if(newVotes[selected] >= votes[popular]){
+      setPopular(selected)
+    }
+  }
+  
   return (
     <div>
+      <h2>Anecdote of the Day</h2>
       <p>{anecdotes[selected]}</p>
       <p>has {votes[selected]} votes.</p>
       <button onClick={() => VoteSelect()}>Vote!</button>
-      <p>
       <button onClick={() => setSelected(Math.floor(Math.random() * anecdotes.length))}>next anecdote</button>
-      </p>
+      <h2>Anecdote with the most votes</h2>
+      <p>{anecdotes[popular]}</p>
+      <p>has {votes[popular]} votes</p>
     </div>
   )
 }

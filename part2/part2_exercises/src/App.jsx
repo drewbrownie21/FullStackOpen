@@ -47,6 +47,7 @@ const App = () => {
     }
   ]
 
+  // Course is declared as it's own module already for exercise 2.5 - Step 10 of course info
   return(
     <div>
       {courses.map(course => 

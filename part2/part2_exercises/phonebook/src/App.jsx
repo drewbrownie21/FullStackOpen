@@ -6,13 +6,18 @@ const App = () => {
   ]) 
 
   const [newName, setNewName] = useState('')
-  const [showAll, setShowAll] = useState(true)
 
   const addPerson = (event) => {
     event.preventDefault()
+
     const personObject = {
       name: newName
     }
+
+    if(persons.map(a=>a.name).includes(newName)){
+      alert(`${newName} is already in the phonebook!`)
+    }
+
     setPersons(persons.concat(personObject))
     setNewName("")
   }

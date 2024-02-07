@@ -22,8 +22,13 @@
     },
     {
       "id": "5",
-      "content": "New Test!!!!",
-      "important": true
+      "content": "",
+      "important": false
+    },
+    {
+      "id": "6",
+      "content": "",
+      "important": false
     }
   ]
 }

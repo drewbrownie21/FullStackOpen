@@ -18,7 +18,6 @@ const App = () => {
   const [newSearch, setNewSearch] = useState('')
 
   const hook = () => {
-    console.log('effect')
     axios
       .get('http://localhost:3001/persons')
       .then(response => {
@@ -44,10 +43,14 @@ const App = () => {
       if(persons.map(a=>a.name).includes(newName)){
         alert(`${newName} is already in the phonebook!`)
       }else{
-        setPersons(persons.concat(personObject))
+          axios
+          .post('http://localhost:3001/persons', personObject)
+          .then(response => {
+              setPersons(persons.concat(response.data))
+              setNewName("")
+              setNewNumber("")
+          })      
       }
-      setNewName("")
-      setNewNumber("")
   }
 
   const handleNameChange = (event) => {

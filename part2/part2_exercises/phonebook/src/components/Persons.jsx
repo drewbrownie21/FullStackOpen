@@ -9,3 +9,4 @@ const Persons = ({ peopleToShow }) => {
   }
   
   export default Persons
+  

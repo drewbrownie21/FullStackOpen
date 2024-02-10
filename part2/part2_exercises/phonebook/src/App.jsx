@@ -3,7 +3,7 @@ import axios from 'axios'
 import Filter from './components/Filter'
 import PersonsForm from './components/PersonsForm'
 import Persons from './components/Persons'
-
+import PersonService from './services/personService'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -17,16 +17,13 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [newSearch, setNewSearch] = useState('')
 
-  const hook = () => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
+  useEffect(() => {
+    PersonService
+      .getAll()
+      .then(initialPeople => {
+        setPersons(initialPeople)
       })
-  }
-  
-  useEffect(hook, [])
+  }, [])
 
   const peopleToShow = newSearch.length > 0
     ? persons.filter(person => person.name.includes(newSearch))
@@ -37,19 +34,20 @@ const App = () => {
 
       const personObject = {
         name   : newName,
-        number : newNumber
+        number : newNumber,
+        id : `${persons.length + 1}`
       }
 
       if(persons.map(a=>a.name).includes(newName)){
         alert(`${newName} is already in the phonebook!`)
       }else{
-          axios
-          .post('http://localhost:3001/persons', personObject)
-          .then(response => {
-              setPersons(persons.concat(response.data))
-              setNewName("")
-              setNewNumber("")
-          })      
+          PersonService
+            .createPerson(personObject)
+              .then(response => {
+                  setPersons(persons.concat(response))
+                  setNewName("")
+                  setNewNumber("")
+              })      
       }
   }
 

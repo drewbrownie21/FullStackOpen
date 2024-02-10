@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import Filter from './components/Filter'
 import PersonsForm from './components/PersonsForm'
 import Persons from './components/Persons'
@@ -39,7 +38,10 @@ const App = () => {
       }
 
       if(persons.map(a=>a.name).includes(newName)){
-        alert(`${newName} is already in the phonebook!`)
+        window.confirm(`${newName} is already in the phonebook! Do you want to replace the existing number?`)
+        //Update the person
+        const existingPerson = persons.find(person => person.name == newName)
+        updatePerson(existingPerson, newNumber)
       }else{
           PersonService
             .createPerson(personObject)
@@ -50,6 +52,20 @@ const App = () => {
               })      
       }
   }
+
+  const updatePerson = (personObject, newNumber) => {
+    const updatedPersonObject = {
+      name   : personObject.name,
+      number : newNumber,
+      id : personObject.id
+    }
+    PersonService
+      .updatePerson(updatedPersonObject)
+      .then(returnedPerson => {
+        setPersons(persons.map(person => person.id !== personObject.id ? person : returnedPerson))
+      })
+  }
+
 
   const deletePerson = (person) => {
     window.confirm(`Do you want to delete ${person.name}`)

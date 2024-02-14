@@ -45,14 +45,13 @@ const App = () => {
         //Update the person
         const existingPerson = persons.find(person => person.name == newName)
         updatePerson(existingPerson, newNumber)
-        setErrorMessage(`${personObject.name} was updated!`)
       }else{
           PersonService
             .createPerson(personObject)
               .then(response => {
                   setPersons(persons.concat(response))
                   setErrorMessage(`${personObject.name} was added!`)
-              })    
+              })
       }
       setTimeout(() => {
         setErrorMessage(null)
@@ -71,9 +70,9 @@ const App = () => {
       .updatePerson(updatedPersonObject)
       .then(returnedPerson => {
         setPersons(persons.map(person => person.id !== personObject.id ? person : returnedPerson))
-      })
+        setErrorMessage(`${personObject.name} was updated!`)
+      })    
   }
-
 
   const deletePerson = (person) => {
     window.confirm(`Do you want to delete ${person.name}`)
@@ -81,7 +80,14 @@ const App = () => {
       .deletePerson(person.id)   
         .then(persons => {
           setPersons(persons.filter(p => p.id !== person.id))
+          setErrorMessage(`${person.name} was deleted!`)
+        })     
+        .catch(error => {
+          setErrorMessage(`ERROR: ${person.name} was already deleted from the server.`)
         }) 
+        setTimeout(() => {
+          setErrorMessage(null)
+          }, 5000)
   }
 
   const handleNameChange = (event) => {
@@ -115,8 +121,6 @@ const App = () => {
         deletePerson={deletePerson}
       />  
       </ul>
-
-
     </div>
   )
 }

@@ -21,7 +21,7 @@ const Footer = () => {
 }
 
 const App = () => {
-  const [notes, setNotes] = useState([])
+  const [notes, setNotes] = useState(null)
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState('Some error happened...')
@@ -33,6 +33,10 @@ const App = () => {
         setNotes(initialNotes)
       })
   }, [])
+
+  if(!notes){
+    return null
+  }
 
   const addNote = (event) => {
     event.preventDefault()
@@ -71,7 +75,6 @@ const App = () => {
   }
 
   const handleNoteChange = (event) => {
-    console.log(event.target.value)
     setNewNote(event.target.value)
   }
 

@@ -11,7 +11,7 @@ const getAllCountries = () => {
 }
 
 const getCountry = (country) => {
-    const request = axios.get(`${BASE_COUNTRY_URL}/name/${country[0]}`)
+    const request = axios.get(`${BASE_COUNTRY_URL}/name/${country}`)
     return request.then(repsonse => {
         return repsonse.data
     })

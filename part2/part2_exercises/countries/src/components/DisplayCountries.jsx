@@ -1,28 +1,16 @@
-import CountryServices from "../services/countryServices"
-import { useState, useEffect } from "react"
+const DisplayCountries = ({countries, singleCountry, selectedCountryFunc}) => {
+    const handleSelectCountry = (country) => {
+        selectedCountryFunc(country)
+    }
 
-const DisplayCountries = (countries) => {
-    const [singleCountry, setSingleCountry] = useState(null)
-
-    useEffect(() => {
-        if (countries.countries.length === 1) {
-            CountryServices.getCountry(countries.countries)
-                .then(response => {
-                    setSingleCountry(response)
-                })
-                .catch(error => {
-                    console.error('Error fetching country data:', error);
-                });
-        }
-    }, [countries])
-
-    if(countries.countries.length > 10){
+    if(countries.length > 10){
         return(
             <div>
                 Too many matches, specfiy another filter
             </div>
         )
-    }else if(countries.countries.length == 1 && singleCountry != null){
+    }
+    else if((singleCountry != null && typeof singleCountry == "object")){
         return(
             <div>
             <h2>{singleCountry.name.common}</h2>
@@ -44,9 +32,10 @@ const DisplayCountries = (countries) => {
         )
     }else{
         return(
-            countries.countries.map((country, index) => 
+            countries.map((country, index) => 
             <div key={index}>
                 {country}
+                <button onClick={() => handleSelectCountry(country)}>Show</button>
             </div>
             )
         )

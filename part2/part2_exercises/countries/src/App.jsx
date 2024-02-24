@@ -8,6 +8,9 @@ function App() {
   const [newSearch, setNewSearch] = useState('')
   const [singleCountry, setSingleCountry] = useState(null)
   const [selectedCountry, setSelectedCountry] = useState(null)
+  const [latlong, setLatlong] = useState('')
+  const [temp, setTemp] = useState('')
+  const [wind, setWind] = useState('')
 
   const handleSelectedCountry = (country) => {
     setSelectedCountry(country)
@@ -22,27 +25,44 @@ function App() {
       })
     }, [newSearch])
 
-  // Handle which get function to use - Either if there is only one result
-  // or if a country is selected to be shown
+  // sets all country states
   useEffect(() => {
+    // If there is only one country left
     if (countriesToShow.length === 1) {
         CountryService.getCountry(countriesToShow[0])
             .then(response => {
                 setSingleCountry(response)
+                setLatlong(response.latlng)
             })
             .catch(error => {
                 console.error('Error fetching country data:', error);
             });
+        if(singleCountry !== null){
+          CountryService.getWeather(latlong)
+            .then(response => {
+                setTemp(response.main.temp)
+                setWind(response.wind.speed)
+          })
+        }
+    // This block handle when a country is selected
     }else if(selectedCountry != null && typeof selectedCountry === 'string'){
       CountryService.getCountry(selectedCountry)
         .then(response => {
             setSingleCountry(response)
+            setLatlong(response.latlng)
         })
+      if(selectedCountry !== null){
+        CountryService.getWeather(latlong)
+          .then(response => {
+            setTemp(response.main.temp)
+            setWind(response.wind.speed)        
+        })
+      }
     }else {
       // Reset singleCountry if no country is selected or shown
       setSingleCountry(null);
     }
-}, [newSearch, selectedCountry, countries, singleCountry])
+  }, [selectedCountry, countries, singleCountry])
 
   const countriesToShow = newSearch === '' 
   ? []
@@ -61,6 +81,8 @@ function App() {
           countries={countriesToShow} 
           singleCountry={singleCountry}
           selectedCountryFunc={handleSelectedCountry}
+          temp={temp}
+          wind={wind}
       />
     </div>
   )

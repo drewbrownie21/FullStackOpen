@@ -1,4 +1,7 @@
-const DisplayCountries = ({countries, singleCountry, selectedCountryFunc}) => {
+const DisplayCountries = ({countries, singleCountry, selectedCountryFunc, temp, wind}) => {
+    const tempC = temp - 273.15
+    const tempF = (tempC * (9/5)) + 32
+
     const handleSelectCountry = (country) => {
         selectedCountryFunc(country)
     }
@@ -28,7 +31,15 @@ const DisplayCountries = ({countries, singleCountry, selectedCountryFunc}) => {
                 <img src={singleCountry.flags.png} />
             </div>
 
+            <h2>Weather in {singleCountry.capital}</h2>
+            <div>Temperature: {tempC.toFixed(2)} C / {tempF.toFixed(2)} F</div>
+            <div>Wind: {wind} m/s</div>
+
             </div>
+        )
+    }else if(countries.length === 0){
+        return(
+            <div>No countires to display...</div>
         )
     }else{
         return(

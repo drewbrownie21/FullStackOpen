@@ -49,7 +49,7 @@ app.get('/api/persons/:id', (request, response) => {
     if(note){
         response.json(note)
     }else{
-        response.send('<h1>No id found</h1>')
+        response.send(`<h1>ID ${id} not found in the phonebook.</h1>`)
         response.status(400).end()
     }
 })

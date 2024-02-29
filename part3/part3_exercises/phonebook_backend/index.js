@@ -26,6 +26,14 @@ let phonebook = [
     }
 ]
 
+const phonebook_length = () => {
+    const phonebookLength = phonebook.length > 0
+    ? Math.max(...phonebook.map(n => n.id))
+    : 0
+
+    return phonebookLength
+}
+
 app.get('/', (request, response) => {
     response.send('<h1>Phonebook backend</h1>')
 })
@@ -44,6 +52,10 @@ app.get('/api/persons/:id', (request, response) => {
         response.send('<h1>No id found</h1>')
         response.status(400).end()
     }
+})
+
+app.get('/api/info', (request, response) => {
+    response.send(`<p>Phonebook has info for ${phonebook_length()} people.</p></br><p>${Date()}</p>`)
 })
 
 const PORT = 3001

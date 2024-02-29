@@ -26,6 +26,10 @@ let phonebook = [
     }
 ]
 
+const generate_id = () => {
+    return Math.floor(Math.random() * 5000)
+}
+
 const phonebook_length = () => {
     const phonebookLength = phonebook.length > 0
     ? Math.max(...phonebook.map(n => n.id))
@@ -63,6 +67,24 @@ app.delete('/api/persons/:id', (request, response) => {
     phonebook = phonebook.filter(person => person.id !== id)
 
     response.status(204).end()
+})
+
+app.post('/api/persons', (request, response) => {
+    const body = request.body
+
+    if(!body.name || !body.number){
+        return  response.status(400).end()
+    }
+
+    const person = {
+        id : generate_id(),
+        name : body.name,
+        number : body.number
+    }
+
+    phonebook = phonebook.concat(person)
+
+    response.json(person)
 })
 
 const PORT = 3001

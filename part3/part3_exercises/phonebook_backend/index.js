@@ -72,7 +72,18 @@ app.delete('/api/persons/:id', (request, response) => {
 app.post('/api/persons', (request, response) => {
     const body = request.body
 
-    if(!body.name || !body.number){
+    if(!body.name){
+        response.json('Name is required')
+        return  response.status(400).end()
+    }
+
+    if(!body.number){
+        response.json('Number is required')
+        return  response.status(400).end()
+    }
+
+    if(phonebook.some(person => person.name.toLowerCase() === body.name.toLowerCase())){
+        response.json(`${body.name} is already in the phonebook.`)
         return  response.status(400).end()
     }
 

@@ -5,8 +5,15 @@ const app = express()
 
 app.use(express.json())
 
+// Only set a body if the method was a POST request
+morgan.token('req-body', (req, res) => {
+    return req.method === "POST" ? JSON.stringify(req.body) : ""
+})
+
 // Logger using morgan - tiny 
-app.use(morgan('tiny'))
+app.use(
+    morgan(':method :url :status :response-time ms - :res[content-length] :req-body')
+  )
 
 let phonebook = [
     { 

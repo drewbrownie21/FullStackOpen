@@ -1,7 +1,12 @@
 const express = require('express')
+let morgan = require('morgan')
+
 const app = express()
 
 app.use(express.json())
+
+// Logger using morgan - tiny 
+app.use(morgan('tiny'))
 
 let phonebook = [
     { 

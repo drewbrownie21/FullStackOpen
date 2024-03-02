@@ -1,10 +1,16 @@
 const express = require('express')
 const cors = require('cors')
+let morgan = require('morgan')
+
 const PORT = process.env.PORT || 3001
+
 const app = express()
 
 app.use(cors())
 app.use(express.json())
+// Logger using morgan - tiny 
+app.use(morgan('tiny'))
+
 
 let notes = [
     {

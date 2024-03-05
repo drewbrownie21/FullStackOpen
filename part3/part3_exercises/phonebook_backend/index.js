@@ -1,9 +1,11 @@
 const express = require('express')
 let morgan = require('morgan')
+const cors = require('cors')
 
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 
 // Only set a body if the method was a POST request
 morgan.token('req-body', (req, res) => {

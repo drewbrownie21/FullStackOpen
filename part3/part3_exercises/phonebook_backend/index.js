@@ -6,6 +6,7 @@ const app = express()
 
 app.use(express.json())
 app.use(cors())
+app.use(express.static('dist'))
 
 // Only set a body if the method was a POST request
 morgan.token('req-body', (req, res) => {
